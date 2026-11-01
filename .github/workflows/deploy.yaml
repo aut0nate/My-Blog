@@ -13,13 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      # Give the default GITHUB_TOKEN write permission to commit and push the
-      # added or changed files to the repository.
-      contents: write
+      contents: read
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -35,10 +33,9 @@ jobs:
         run: sudo snap install dart-sass
 
       - name: Setup Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
-          # Use a released Go version (1.24.x is not available yet)
-          go-version: "^1.22"
+          go-version: stable
           
       - name: Check Go version
         run: go version
@@ -52,7 +49,25 @@ jobs:
       - name: Build
         run: hugo --minify --gc
 
-      - name: Deploy 🚀
+      - name: Save built site
+        uses: actions/upload-artifact@v7
+        with:
+          name: blog-site
+          path: public
+
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v8
+        with:
+          name: blog-site
+          path: public
+      - name: Deploy site
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages

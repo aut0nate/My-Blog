@@ -14,3 +14,9 @@ hugo.linux
 /.hugo_build.lock
 
 .DS_Store
+# Local credentials and private material
+.env
+.env.*
+!.env.example
+*.key
+*.pem

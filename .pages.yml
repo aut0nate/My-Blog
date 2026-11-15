@@ -1,0 +1,61 @@
+# The CMS edits Markdown in GitHub; Hugo continues to render the website.
+media:
+  - name: uploads
+    label: Blog uploads
+    input: static/uploads
+    output: /uploads
+    categories: [image, document, video, audio]
+    rename: safe
+
+content:
+  - name: posts
+    label: Blog posts
+    type: collection
+    path: content/post
+    format: yaml-frontmatter
+    filename:
+      template: "{title}/index.md"
+      field: create
+    subfolders: true
+    exclude: [_index.md]
+    view:
+      layout: tree
+      node:
+        filename: index.md
+        hideDirs: others
+      primary: title
+      fields: [title, date]
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: date
+        label: Publication date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+        description: Use short, lowercase tags.
+      - name: body
+        label: Article
+        type: rich-text
+        options:
+          format: markdown
+          switcher: true
+          media: uploads
+          categories: [image]
+          rename: safe
+
+settings:
+  content:
+    # Preserve existing optional metadata such as imageLayout and pin.
+    merge: true

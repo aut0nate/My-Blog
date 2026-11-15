@@ -13,6 +13,7 @@ Blog posts live under `content/post/<Title Case Folder>/index.md`. Each post has
 - Markdown for written content
 - Chirpy for the site theme
 - GitHub Pages for hosting
+- Self-hosted Pages CMS for private editing; configuration is in `.pages.yml`.
 
 ## Build and Preview Commands
 
@@ -74,3 +75,7 @@ The site is hosted on GitHub Pages. Validate locally before pushing changes so t
 - Prefer simple, maintainable changes that fit the current Hugo structure.
 - Link to official documentation when a technical reference helps the reader.
 - Keep confirmed personal experience separate from general explanation and clearly qualify opinions or examples.
+- Keep CMS edits compatible with the existing post bundles. New CMS uploads use `static/uploads`.
+- Preserve unmanaged front-matter fields when editing through the CMS (`settings.content.merge: true`).
+- Keep Source mode available for Hugo shortcodes and code. The CMS preview does not replace Hugo validation.
+- Follow `docs/pages-cms.md` for writing and publishing; infrastructure belongs in the Docker Homelab repository.

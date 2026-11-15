@@ -1,0 +1,25 @@
+{{- $apple := resources.Get "img/favicons/apple-touch-icon.png" | fingerprint -}}
+{{- $favicon32 := resources.Get "img/favicons/favicon-32x32.png" | fingerprint -}}
+{{- $favicon16 := resources.Get "img/favicons/favicon-16x16.png" | fingerprint -}}
+{{- $faviconIco := resources.Get "img/favicons/favicon.ico" | fingerprint -}}
+{{- $browserconfig := resources.Get "img/favicons/browserconfig.xml" | fingerprint -}}
+{{- $tile := resources.Get "img/favicons/mstile-150x150.png" -}}
+{{- $tile.Publish -}}
+
+<link rel="apple-touch-icon" sizes="180x180" href="{{ $apple.RelPermalink }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ $favicon32.RelPermalink }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ $favicon16.RelPermalink }}">
+{{- if site.Params.pwa.enabled -}}
+  {{- range slice "web-app-manifest-192x192.png" "web-app-manifest-512x512.png" -}}
+    {{- $icon := resources.Get (printf "img/favicons/%s" .) -}}
+    {{- $icon.Publish -}}
+  {{- end -}}
+  {{- $manifest := resources.Get "img/favicons/site.webmanifest" | fingerprint -}}
+<link rel="manifest" href="{{ $manifest.RelPermalink }}">
+{{- end }}
+<link rel="shortcut icon" href="{{ $faviconIco.RelPermalink }}">
+<meta name="apple-mobile-web-app-title" content="{{ site.Title }}">
+<meta name="application-name" content="{{ site.Title }}">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-config" content="{{ $browserconfig.RelPermalink }}">
+<meta name="theme-color" content="#ffffff">

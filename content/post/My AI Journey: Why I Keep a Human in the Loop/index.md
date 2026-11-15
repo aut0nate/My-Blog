@@ -2,6 +2,7 @@
 title: "My AI Journey: Why I Keep a Human in the Loop"
 date: 2026-09-01
 tags: [ai, llm, codex, productivity, learning]
+pin: true
 ---
 
 Like many people, I use AI tools every day. I enjoy experimenting with everything from frontier models to smaller models that I can run locally, and AI has become a significant part of both my work and personal life.
